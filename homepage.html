@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- Design tokens ---------- */
+        :root {
+            --ink: #14233B;
+            --muted: #5B6B80;
+            --paper: #F2F5F8;
+            --panel: #FFFFFF;
+            --line: #D9E0E8;
+            --blue: #2457D6;
+            --blue-dark: #1B44AB;
+            --green: #1E7F5C;
+            --amber: #B7791F;
+            --red: #C0392B;
+        }
+
+        /* ---------- Base ---------- */
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: "Manrope", "Segoe UI", system-ui, sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.5;
+        }
+        h1, h2, h3 {
+            font-family: "Bricolage Grotesque", "Manrope", "Segoe UI", sans-serif;
+            line-height: 1.2;
+            margin: 0 0 0.5rem;
+        }
+
+        /* ---------- Header ---------- */
+        header {
+            background: var(--ink);
+            color: #fff;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        header h1 { font-size: 1.9rem; margin: 0; }
+        header p { margin: 0.15rem 0 0; color: #B8C4D6; }
+
+        /* ---------- Navigation ---------- */
+        nav {
+            background: var(--panel);
+            border-bottom: 1px solid var(--line);
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 0.25rem;
+            overflow-x: auto;
+            font-size: 0; /* hides the "|" text separators */
+        }
+        nav a {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-decoration: none;
+            padding: 0.9rem 1rem;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+        nav a:hover { color: var(--ink); }
+        nav a.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+        /* ---------- Buttons & fields ---------- */
+        button {
+            font: inherit;
+            font-weight: 600;
+            background: var(--blue);
+            color: #fff;
+            border: 0;
+            border-radius: 6px;
+            padding: 0.6rem 1.1rem;
+            cursor: pointer;
+        }
+        button:hover { background: var(--blue-dark); }
+        a:focus-visible, button:focus-visible,
+        input:focus-visible, select:focus-visible {
+            outline: 3px solid #9DB6F5;
+            outline-offset: 2px;
+        }
+        label { font-weight: 600; font-size: 0.9rem; }
+        input, select {
+            font: inherit;
+            color: var(--ink);
+            background: #fff;
+            padding: 0.5rem 0.6rem;
+            border: 1px solid #B9C4D2;
+            border-radius: 6px;
+        }
+        input[readonly] { background: #EEF2F6; color: var(--muted); }
+
+        /* ---------- Footer ---------- */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--line);
+            margin-top: 2rem;
+        }
+
+        /* ---------- Home page ---------- */
+        main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 0; }
+        main > h2 { font-size: 1.5rem; }
+        .legend { color: var(--muted); font-size: 0.9rem; margin: 0 0 1.25rem; }
+
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1rem;
+        }
+        .attendance-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-left: 6px solid var(--c, var(--blue));
+            border-radius: 8px;
+            padding: 1.1rem 1.2rem;
+        }
+        .attendance-card h2 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+        .percentage {
+            font-family: "Bricolage Grotesque", "Manrope", sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--c, var(--blue));
+        }
+        /* progress bar: dark tick marks the 75% criteria */
+        .bar {
+            position: relative;
+            height: 8px;
+            background: #E6EBF1;
+            border-radius: 4px;
+            margin: 0.9rem 0 0.6rem;
+        }
+        .bar span {
+            display: block;
+            height: 100%;
+            background: var(--c, var(--blue));
+            border-radius: 4px;
+        }
+        .bar::after {
+            content: "";
+            position: absolute;
+            left: 75%;
+            top: -4px;
+            bottom: -4px;
+            width: 2px;
+            background: var(--ink);
+        }
+        .attendance-card p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard">
+        <div>
+            <h1>Hello, <span id="username">User</span></h1>
+            <p>Your attendance overview</p>
+        </div>
+        <div class="date">
+            <span id="date">7/10/2026</span>
+        </div>
+    </header>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="homepage.html" class="active">Home</a> |
+        <a href="dashboard.html">Dashboard</a> |
+        <a href="timetable.html">Timetable</a> | 
+        <a href="attendance.html">Mark Attendance</a> |
+        <a href="calculator.html">Attendance Calculator</a> |
+        <a href="criteria.html">Criteria Checker</a>
+    </nav>
+    <main>
+        <h2>Attendance Overview</h2>
+        <p class="legend">The dark tick on each bar marks the 75% attendance criteria.</p>
+        <!-- Attendance Cards -->
+        <section class="attendance-grid">
+
+            <div class="attendance-card" style="--c:#1E7F5C">
+                <h2>Mathematics</h2>
+                <div class="percentage">82%</div>
+                <div class="bar"><span style="width:82%"></span></div>
+                <p>41 / 50 classes attended</p>
+            </div>
+            <div class="attendance-card" style="--c:#B7791F">
+                <h2>Programming</h2>
+                <div class="percentage">76%</div>
+                <div class="bar"><span style="width:76%"></span></div>
+                <p>38 / 50 classes attended</p>
+            </div>
+            <div class="attendance-card" style="--c:#1E7F5C">
+                <h2>EEE</h2>
+                <div class="percentage">91%</div>
+                <div class="bar"><span style="width:91%"></span></div>
+                <p>45 / 49 classes attended</p>
+            </div>
+            <div class="attendance-card" style="--c:#C0392B">
+                <h2>Web Development</h2>
+                <div class="percentage">68%</div>
+                <div class="bar"><span style="width:68%"></span></div>
+                <p>34 / 50 classes attended</p>
+            </div>
+            <div class="attendance-card" style="--c:#1E7F5C">
+                <h2>English</h2>
+                <div class="percentage">88%</div>
+                <div class="bar"><span style="width:88%"></span></div>
+                <p>44 / 50 classes attended</p>
+            </div>
+
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Attendance Tracker For Students</p>
+    </footer>
+</body>
+</html>
