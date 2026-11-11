@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance OS</title>
+    <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="logo">◷ Attendance OS</div>
+    <div class="header-actions">
+        <button id="reminderBtn" type="button">🔔 Enable reminders</button>
+        <button id="themeBtn" type="button">☀ / ☾</button>
+    </div>
+</header>
+
+<main>
+    <!-- HERO: welcome text + page tabs together -->
+    <section class="hero welcome">
+        <div class="hero-text">
+            <p class="muted eyebrow">YOUR SEMESTER DASHBOARD</p>
+            <h1>Welcome back 👋</h1>
+            <p class="muted">Keep your attendance under control.</p>
+        </div>
+
+        <nav>
+            <button class="tab active" data-page="dashboard">Overview</button>
+            <button class="tab" data-page="timetable">Timetable</button>
+            <button class="tab" data-page="subjects">Subjects</button>
+        </nav>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page">
+        <div class="dash-layout">
+
+            <!-- left column: numbers + subjects -->
+            <div class="dash-main">
+                <h2 class="section-title">Attendance Overview</h2>
+
+                <div class="stats">
+                    <div class="card stat stat-overall">
+                        <p>Overall Attendance</p>
+                        <h2 id="overall">0%</h2>
+                    </div>
+                    <div class="card stat stat-present">
+                        <p>Classes Attended</p>
+                        <h2 id="present">0</h2>
+                    </div>
+                    <div class="card stat stat-absent">
+                        <p>Classes Missed</p>
+                        <h2 id="absent">0</h2>
+                    </div>
+                    <div class="card stat stat-safe">
+                        <p>Safe Classes to Miss</p>
+                        <h2 id="safe">0</h2>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Subject Breakdown</h2>
+                <div id="subjectStats" class="subject-grid"></div>
+            </div>
+
+            <!-- right column: progress + today -->
+            <aside class="dash-side">
+                <div class="card progress-card">
+                    <h3>Attendance Progress</h3>
+                    <div class="progress">
+                        <div id="progressBar"></div>
+                    </div>
+                    <p id="status">Target: 75%</p>
+                </div>
+
+                <h2 class="section-title">Today's Classes</h2>
+                <div class="card today-card">
+                    <div id="todayClasses"></div>
+                </div>
+            </aside>
+
+        </div>
+    </section>
+
+    <!-- TIMETABLE -->
+    <section id="timetable" class="page hidden">
+        <h2 class="section-title">Weekly Timetable</h2>
+        <p class="muted">Add your regular weekly classes.</p>
+
+        <div class="card form">
+            <label>Subject</label>
+            <select id="classSubject"></select>
+
+            <label>Day</label>
+            <select id="classDay">
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+            </select>
+
+            <label>Start Time</label>
+            <input type="time" id="startTime" value="09:00">
+
+            <label>End Time</label>
+            <input type="time" id="endTime" value="10:00">
+
+            <button class="primary" id="addClass">Add Class</button>
+        </div>
+
+        <div class="days" id="days"></div>
+
+        <div class="card">
+            <h3 id="selectedDay">Monday</h3>
+            <div id="dayClasses"></div>
+        </div>
+
+        <h2 class="section-title">Extra Classes</h2>
+        <p class="muted">One-time classes (like an extra lecture by a teacher). Attendance counts towards the subject.</p>
+
+        <div class="card form">
+            <label>Subject</label>
+            <select id="extraSubject"></select>
+
+            <label>Date</label>
+            <input type="date" id="extraDate">
+
+            <label>Start Time</label>
+            <input type="time" id="extraStart" value="09:00">
+
+            <label>End Time</label>
+            <input type="time" id="extraEnd" value="10:00">
+
+            <button class="primary" id="addExtra">Add Extra Class</button>
+        </div>
+
+        <div class="card">
+            <h3>Your Extra Classes</h3>
+            <div id="extraClassList"></div>
+        </div>
+    </section>
+
+    <!-- SUBJECTS -->
+    <section id="subjects" class="page hidden">
+        <h2 class="section-title">Manage Subjects</h2>
+
+        <div class="card form">
+            <label>Subject Name</label>
+            <input type="text" id="subjectName" placeholder="e.g. Linear Algebra">
+
+            <label>Subject Code</label>
+            <input type="text" id="subjectCode" placeholder="e.g. MTH101">
+
+            <label>Attendance Target (%)</label>
+            <input type="number" id="target" value="75" min="1" max="100">
+
+            <button class="primary" id="addSubject">Add Subject</button>
+        </div>
+
+        <div id="subjectList"></div>
+    </section>
+</main>
+
+<!-- MARK ATTENDANCE POPUP -->
+<div id="markModal" class="modal hidden">
+    <div class="card modal-box">
+        <h3 id="markTitle">Mark attendance</h3>
+
+        <label for="markDate">Class date</label>
+        <input type="date" id="markDate">
+        <p class="muted" id="markNote"></p>
+
+        <div class="modal-actions">
+            <button class="primary" id="markPresent" type="button">Present</button>
+            <button id="markAbsent" type="button">Absent</button>
+            <button id="markCancel" type="button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="script2.js"></script>
+</body>
+</html>
