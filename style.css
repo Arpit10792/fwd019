@@ -1,0 +1,721 @@
+/* ==========================================================
+   ATTENDANCE OS — EDITORIAL PLANNER THEME
+   Replacement stylesheet for the existing four-page project.
+   Keeps the current HTML classes and IDs compatible.
+   ========================================================== */
+
+:root {
+    color-scheme: dark;
+    --bg: #171b17;
+    --bg-secondary: #20271f;
+    --surface: #252d24;
+    --surface-hover: #303a2f;
+    --text: #f1eee5;
+    --text-secondary: #c1c5b8;
+    --muted: #929b8d;
+    --primary: #c58b69;
+    --primary-hover: #d49a77;
+    --primary-soft: rgba(197, 139, 105, 0.15);
+    --border: #3b4639;
+    --input-bg: #1d241d;
+    --success: #a8bd91;
+    --danger: #d78375;
+    --warning: #d8b66f;
+    --shadow: 0 14px 38px rgba(0, 0, 0, 0.20);
+    --display-font: Georgia, "Times New Roman", serif;
+    --body-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body.light {
+    color-scheme: light;
+    --bg: #f3f0e8;
+    --bg-secondary: #e9e5d9;
+    --surface: #fbfaf5;
+    --surface-hover: #f0ede4;
+    --text: #292e26;
+    --text-secondary: #626b5e;
+    --muted: #858d7e;
+    --primary: #9a6549;
+    --primary-hover: #805139;
+    --primary-soft: rgba(154, 101, 73, 0.11);
+    --border: #dfddd1;
+    --input-bg: #f7f5ee;
+    --success: #58764e;
+    --danger: #b65e50;
+    --warning: #98772f;
+    --shadow: 0 12px 32px rgba(53, 49, 37, 0.065);
+}
+
+/* Base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 8% 0%, rgba(161, 143, 105, 0.08), transparent 34rem),
+        var(--bg);
+    color: var(--text);
+    font-family: var(--body-font);
+    line-height: 1.65;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+a {
+    color: inherit;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* Header */
+header {
+    min-height: 76px;
+    padding: 15px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(18px);
+}
+
+.logo {
+    font-family: var(--display-font);
+    font-size: 1.55rem;
+    font-weight: 600;
+    letter-spacing: -0.8px;
+    color: var(--text);
+}
+
+.logo::first-letter {
+    color: var(--primary);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.header-actions button {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-hover);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 650;
+}
+
+.header-actions button:hover {
+    border-color: var(--primary);
+    color: var(--text);
+    background: var(--primary-soft);
+}
+
+.header-actions button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Main layout */
+main {
+    width: min(1120px, 88%);
+    margin: 42px auto 76px;
+}
+
+/* Welcome / page introduction */
+.welcome {
+    padding: clamp(25px, 4vw, 42px);
+    margin-bottom: 25px;
+    border: 1px solid var(--border);
+    border-radius: 7px 24px 7px 24px;
+    background:
+        linear-gradient(115deg, var(--surface), var(--bg-secondary));
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome::after {
+    content: "✳";
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-55%) rotate(-12deg);
+    color: var(--primary);
+    opacity: 0.15;
+    font-size: clamp(5rem, 12vw, 9rem);
+    line-height: 1;
+    pointer-events: none;
+}
+
+.welcome h1 {
+    position: relative;
+    z-index: 1;
+    font-family: var(--display-font);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -1.7px;
+    margin: 7px 0 9px;
+}
+
+.welcome .muted {
+    position: relative;
+    z-index: 1;
+}
+
+.welcome .muted:first-child {
+    color: var(--primary);
+    font-weight: 750;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    gap: 5px;
+    padding: 6px;
+    margin-bottom: 34px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    width: fit-content;
+    box-shadow: var(--shadow);
+}
+
+nav a {
+    text-decoration: none;
+    display: block;
+}
+
+.tab {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 19px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 650;
+    font-size: 0.84rem;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.tab:hover {
+    color: var(--text);
+    background: var(--surface-hover);
+}
+
+.tab.active {
+    background: var(--primary);
+    color: #fffaf4;
+    box-shadow: 0 4px 13px rgba(0, 0, 0, 0.12);
+}
+
+/* Headings */
+h2 {
+    font-family: var(--display-font);
+    font-size: 1.65rem;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    font-weight: 500;
+    margin: 30px 0 17px;
+}
+
+h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Cards */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 23px;
+    box-shadow: var(--shadow);
+    min-width: 0;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.card > p {
+    color: var(--text-secondary);
+}
+
+.card h2 {
+    margin: 8px 0 0;
+    font-family: var(--display-font);
+    font-size: 2.2rem;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* Dashboard stats */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.stats .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 13px;
+}
+
+.stats .card::before {
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: 0;
+    width: 3px;
+    height: 34px;
+    background: var(--primary);
+    border-radius: 0 4px 4px 0;
+}
+
+.stats .card p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.stats .card h2 {
+    font-size: 2.25rem;
+    margin-top: 9px;
+}
+
+/* Progress */
+.progress-card {
+    margin-bottom: 30px;
+}
+
+.progress-card h3 {
+    margin-bottom: 18px;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--bg-secondary);
+    margin: 12px 0;
+}
+
+.progress div {
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--success), var(--primary));
+    transition: width 0.35s ease;
+}
+
+.progress-card #status {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    margin-top: 12px;
+}
+
+/* Subject grid */
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.subject-grid .card h3 {
+    margin-bottom: 8px;
+}
+
+.subject-grid .card h2 {
+    margin: 4px 0;
+    font-size: 1.9rem;
+}
+
+/* Forms */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    max-width: 620px;
+    margin-bottom: 24px;
+}
+
+label {
+    color: var(--text-secondary);
+    font-weight: 650;
+    font-size: 0.84rem;
+    margin-top: 5px;
+}
+
+input,
+select {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 13px;
+    color: var(--text);
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+input::placeholder {
+    color: var(--muted);
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+select option {
+    background: var(--surface);
+    color: var(--text);
+}
+
+/* Buttons */
+.primary {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    background: var(--primary);
+    color: #fffaf4;
+    font-weight: 750;
+    margin-top: 8px;
+}
+
+.primary:hover {
+    background: var(--primary-hover);
+}
+
+button.danger {
+    background: rgba(215, 131, 117, 0.10);
+    border: 1px solid rgba(215, 131, 117, 0.28);
+    color: var(--danger);
+    border-radius: 9px;
+    padding: 9px 13px;
+    font-weight: 650;
+}
+
+button.danger:hover {
+    background: rgba(215, 131, 117, 0.18);
+}
+
+/* Subject list */
+#subjectList {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.subject-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+}
+
+.subject-row .progress {
+    max-width: 420px;
+}
+
+/* Timetable day selector */
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 9px;
+    margin: 24px 0;
+}
+
+.day {
+    padding: 13px 8px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.day strong {
+    font-family: var(--display-font);
+    font-size: 1.2rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.day:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+}
+
+.day.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fffaf4;
+}
+
+.day.selected strong {
+    color: #fffaf4;
+}
+
+/* Class rows */
+#dayClasses,
+#todayClasses {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.class-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 17px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.class-row:hover {
+    border-color: var(--primary);
+}
+
+.class-row > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.class-row strong {
+    font-size: 0.93rem;
+}
+
+.class-row p {
+    margin-top: 3px;
+    font-size: 0.83rem;
+}
+
+.class-row span {
+    color: var(--text-secondary);
+    font-size: 0.83rem;
+    font-weight: 650;
+}
+
+.class-row button:not(.danger) {
+    background: var(--primary-soft);
+    color: var(--primary);
+    border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+    padding: 8px 13px;
+    border-radius: 8px;
+    font-weight: 750;
+}
+
+.class-row button:not(.danger):hover {
+    background: var(--primary);
+    color: #fffaf4;
+}
+
+.attendance-present {
+    color: var(--success) !important;
+}
+
+.attendance-absent {
+    color: var(--danger) !important;
+}
+
+/* Responsive — tablets */
+@media (max-width: 850px) {
+    main {
+        width: 92%;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .days {
+        gap: 6px;
+    }
+
+    .day {
+        padding: 11px 5px;
+        font-size: 0.83rem;
+    }
+}
+
+/* Responsive — phones */
+@media (max-width: 560px) {
+    header {
+        padding: 12px 4%;
+        min-height: 65px;
+    }
+
+    .logo {
+        font-size: 1.13rem;
+    }
+
+    .header-actions {
+        gap: 5px;
+    }
+
+    .header-actions button {
+        padding: 8px 9px;
+        font-size: 0.72rem;
+    }
+
+    main {
+        width: 92%;
+        margin: 24px auto 45px;
+    }
+
+    .welcome {
+        padding: 23px 20px;
+        border-radius: 6px 18px 6px 18px;
+    }
+
+    .welcome h1 {
+        font-size: 2rem;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: space-between;
+        gap: 3px;
+        margin-bottom: 25px;
+        overflow-x: auto;
+    }
+
+    .tab {
+        flex: 1;
+        white-space: nowrap;
+        padding: 10px 7px;
+        font-size: 0.75rem;
+    }
+
+    h2 {
+        font-size: 1.45rem;
+        margin: 24px 0 14px;
+    }
+
+    .stats {
+        gap: 9px;
+    }
+
+    .stats .card {
+        padding: 15px;
+    }
+
+    .stats .card p {
+        font-size: 0.75rem;
+    }
+
+    .stats .card h2 {
+        font-size: 1.75rem;
+    }
+
+    .card {
+        padding: 17px;
+        border-radius: 12px;
+    }
+
+    .subject-grid {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .subject-row {
+        align-items: flex-start;
+    }
+
+    .days {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .class-row {
+        padding: 12px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .class-row > div {
+        flex-basis: 100%;
+    }
+
+    .class-row button {
+        flex: 1;
+    }
+
+    .form {
+        padding: 17px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 360px) {
+    .header-actions button {
+        padding: 7px;
+        font-size: 0.67rem;
+    }
+
+    .logo {
+        font-size: 1rem;
+    }
+
+    .stats .card {
+        padding: 12px;
+    }
+
+    .stats .card h2 {
+        font-size: 1.5rem;
+    }
+}
