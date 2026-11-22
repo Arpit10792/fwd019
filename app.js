@@ -461,6 +461,20 @@ function renderAll() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+// PWA SERVICE WORKER REGISTRATION
+// Service workers require HTTPS or localhost; opening HTML via file:// is not supported.
+if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js", { scope: "./" })
+            .then(registration => {
+                console.info("Attendance OS service worker registered:", registration.scope);
+            })
+            .catch(error => {
+                console.error("Service worker registration failed:", error);
+            });
+    });
+}
+
     setupTheme();
     updateReminderButton();
 
