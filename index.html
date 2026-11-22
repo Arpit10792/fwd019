@@ -1,123 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Attendance Tracker</title>
-
-    <link rel="stylesheet" href="home page.css">
+    <title>Attendance OS — Overview</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
 </head>
-
 <body>
+<header>
+    <div class="logo">◷ Attendance OS</div>
+    <div class="header-actions">
+        <button id="reminderBtn" type="button">🔔 Enable reminders</button>
+        <button id="themeBtn" type="button" aria-label="Toggle colour theme">☀ / ☾</button>
+    </div>
+</header>
 
-    <!-- Header -->
-    <header class="dashboard">
-
+<main>
+    <section class="welcome">
         <div>
-            <h1>Hello, <span id="username">User</span></h1>
-            <p>Your attendance overview</p>
+            <p class="muted">YOUR SEMESTER DASHBOARD</p>
+            <h1>Welcome back 👋</h1>
+            <p class="muted">Keep your attendance under control.</p>
         </div>
+    </section>
 
-        <div class="date">
-            <span id="date">7/10/2026</span>
-        </div>
-
-    </header>
-
-
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-
-        <a href="index.html">Home</a> |
-
-        <a href="timetable.html">Timetable</a> | 
-
-        <a href="attendance.html">Mark Attendance</a> |
-
-        <a href="calculator.html">Attendance Calculator</a> |
-
-        <a href="criteria.html">Criteria Checker</a> |
-
+    <nav>
+        <a class="tab active" href="index.html">Overview</a>
+        <a class="tab" href="timetable.html">Timetable</a>
+        <a class="tab" href="subjects.html">Subjects</a>
+        <a class="tab" href="attendance.html">Attendance</a>
     </nav>
-    
-    <main>
 
+    <section>
         <h2>Attendance Overview</h2>
+        <div class="stats">
+            <div class="card"><p>Overall Attendance</p><h2 id="overall">0%</h2></div>
+            <div class="card"><p>Classes Attended</p><h2 id="present">0</h2></div>
+            <div class="card"><p>Classes Missed</p><h2 id="absent">0</h2></div>
+            <div class="card"><p>Safe Classes to Miss</p><h2 id="safe">0</h2></div>
+        </div>
 
-        <!-- Attendance Cards -->
-        <section class="attendance-grid">
+        <div class="card progress-card">
+            <h3>Attendance Progress</h3>
+            <div class="progress"><div id="progressBar"></div></div>
+            <p id="status">Target: 75%</p>
+        </div>
 
-            <div class="attendance-card">
-                <h2>Mathematics</h2>
-                <div class="percentage">82%</div>
-                <p>41 / 50 classes attended</p>
-            </div>
+        <h2>Subject Breakdown</h2>
+        <div id="subjectStats" class="subject-grid"></div>
 
-
-            <div class="attendance-card">
-                <h2>Programming</h2>
-                <div class="percentage">76%</div>
-                <p>38 / 50 classes attended</p>
-            </div>
-
-
-            <div class="attendance-card">
-                <h2>EEE</h2>
-                <div class="percentage">91%</div>
-                <p>45 / 49 classes attended</p>
-            </div>
-
-
-            <div class="attendance-card">
-                <h2>Web Development</h2>
-                <div class="percentage">68%</div>
-                <p>34 / 50 classes attended</p>
-            </div>
-
-
-            <div class="attendance-card">
-                <h2>English</h2>
-                <div class="percentage">88%</div>
-                <p>44 / 50 classes attended</p>
-            </div>
-
-        </section>
-
-
-        <!-- Quick Actions -->
-        <section class="actions">
-
-            <h2>Quick Actions</h2>
-
-            <a href="timetable.html">
-                <button type="button">Submit Timetable</button>
-            </a>
-
-            <a href="attendance.html">
-                <button type="button">Mark Attendance</button>
-            </a>
-
-            <a href="calculator.html">
-                <button type="button">Calculate Attendance</button>
-            </a>
-
-            <a href="criteria.html">
-                <button type="button">Check Attendance Criteria</button>
-            </a>
-
-        </section>
-
-    </main>
-
-
-    <!-- Footer -->s
-    <footer>
-        <p>&copy; 2026 Attendance Tracker For Students</p>
-    </footer>
-
+        <h2>Today's Classes</h2>
+        <div id="todayClasses"></div>
+    </section>
+</main>
 </body>
-
 </html>
-
